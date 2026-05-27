@@ -56,6 +56,25 @@
         });
 
         document.body.classList.remove("menu-open");
+        
+        // Atualizar título dinamicamente
+        updatePageTitle(panelName);
+    }
+    
+    function updatePageTitle(panelName) {
+        const titles = {
+            "dashboard": "Dashboard",
+            "planejamento": "Metas e Gráficos",
+            "assistente": "IA Local",
+            "perfil": "Perfil e Tema",
+            "futuro": "Pix, Cripto e Acoes",
+            "seguranca": "Seguranca e Privacidade"
+        };
+        
+        const mainTitle = document.querySelector("#page-title-main");
+        if (mainTitle && titles[panelName]) {
+            mainTitle.textContent = titles[panelName];
+        }
     }
 
     function applyTheme(theme) {
@@ -162,6 +181,41 @@
         feed.appendChild(message);
         feed.scrollTop = feed.scrollHeight;
     }
+    
+    function handleBotSend() {
+        const input = document.querySelector("#bot-input");
+        const feed = document.querySelector("#bot-feed");
+        
+        if (!input || !feed || !input.value.trim()) {
+            return;
+        }
+        
+        // Remover mensagem inicial se existir
+        const initialMsg = feed.querySelector(".bot-initial");
+        if (initialMsg) {
+            initialMsg.remove();
+        }
+        
+        // Adicionar mensagem do usuario
+        const userMsg = document.createElement("div");
+        userMsg.className = "bot-message user-message";
+        userMsg.textContent = input.value;
+        feed.appendChild(userMsg);
+        
+        // Simular resposta da IA
+        const bot = document.querySelector("#finance-bot");
+        const saldo = bot?.dataset.saldo || "0,00";
+        const receitas = bot?.dataset.receitas || "0,00";
+        const despesas = bot?.dataset.despesas || "0,00";
+        
+        const botMsg = document.createElement("div");
+        botMsg.className = "bot-message";
+        botMsg.textContent = "Voce perguntou sobre: '" + input.value + "'. Seu saldo atual e R$ " + saldo + ".";
+        feed.appendChild(botMsg);
+        
+        input.value = "";
+        feed.scrollTop = feed.scrollHeight;
+    }
 
     document.addEventListener("submit", (event) => {
         const form = event.target.closest("form[hx-post]");
@@ -185,8 +239,4 @@
         clickAjax(trigger);
     });
 
-    document.addEventListener("DOMContentLoaded", () => {
-        applyTheme(localStorage.getItem(storageKey) || "light");
-        hydrate(document);
-    });
-})();
+    function bindBotSendButton() {\n        const sendBtn = document.querySelector("#bot-send");\n        const input = document.querySelector("#bot-input");\n        \n        if (!sendBtn || !input) {\n            return;\n        }\n        \n        sendBtn.addEventListener("click", handleBotSend);\n        input.addEventListener("keypress", (e) => {\n            if (e.key === "Enter") {\n                handleBotSend();\n            }\n        });\n    }\n\n    document.addEventListener("DOMContentLoaded", () => {\n        applyTheme(localStorage.getItem(storageKey) || "light");\n        hydrate(document);\n        bindBotSendButton();\n    });\n})();

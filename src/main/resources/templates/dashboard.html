@@ -82,16 +82,9 @@
                 <section class="hero-strip">
                     <div>
                         <p class="eyebrow">Resumo do mes</p>
-                        <h1 class="page-title">Dashboard</h1>
+                        <h1 class="page-title" id="page-title-main">Dashboard</h1>
                         <p class="section-subtitle" th:text="'Ola, ' + ${usuarioNome}">Ola, usuario</p>
                         <p class="hero-copy">Um painel profissional para visualizar saldo, receitas, despesas, metas e riscos sem expor seus dados para servicos externos.</p>
-                    </div>
-
-                    <div class="future-note">
-                        <p class="eyebrow">Proximos passos</p>
-                        <p class="section-subtitle">
-                            Pix, boletos, cripto e acoes ficam em uma area separada para entrar depois com consentimento, limites e conexoes protegidas.
-                        </p>
                     </div>
                 </section>
 
@@ -292,6 +285,14 @@
                 </section>
 
                 <section id="panel-planejamento" class="dashboard-panel">
+                    <section class="hero-strip">
+                        <div>
+                            <p class="eyebrow">Planejamento financeiro</p>
+                            <h1 class="page-title" id="page-title-planejamento">Metas e Gráficos</h1>
+                            <p class="section-subtitle" th:text="'Ola, ' + ${usuarioNome}">Ola, usuario</p>
+                            <p class="hero-copy">Acompanhe suas metas financeiras e visualize como seus gastos estão distribuidos por categoria.</p>
+                        </div>
+                    </section>
                     <div class="insight-grid">
                         <article class="insight-card card">
                             <p class="section-title" th:text="${meta.nome}">Reserva de seguranca</p>
@@ -327,31 +328,50 @@
                 </section>
 
                 <section id="panel-assistente" class="dashboard-panel">
-                    <div class="bot-layout">
+                    <section class="hero-strip">
+                        <div>
+                            <p class="eyebrow">Assistente financeiro</p>
+                            <h1 class="page-title" id="page-title-assistente">IA Local</h1>
+                            <p class="section-subtitle" th:text="'Ola, ' + ${usuarioNome}">Ola, usuario</p>
+                            <p class="hero-copy">Um assistente local que resume seus dados sem enviar historico para fora do app. Faça perguntas sobre suas finanças.</p>
+                        </div>
+                    </section>
+                    <div class="bot-main">
                         <article id="finance-bot"
-                                 class="bot-card"
+                                 class="bot-container"
                                  th:data-saldo="${#numbers.formatDecimal(resumo.saldoAtual, 1, 'POINT', 2, 'COMMA')}"
                                  th:data-receitas="${#numbers.formatDecimal(resumo.receitasMes, 1, 'POINT', 2, 'COMMA')}"
                                  th:data-despesas="${#numbers.formatDecimal(resumo.despesasMes, 1, 'POINT', 2, 'COMMA')}"
                                  th:data-categoria="${principalCategoria}"
                                  th:data-economia="${#numbers.formatDecimal(meta.restante, 1, 'POINT', 2, 'COMMA')}">
-                            <p class="section-title">Assistente financeiro local</p>
-                            <p class="section-subtitle">Ele resume seus dados sem enviar historico para fora do app.</p>
-
                             <div id="bot-feed" class="bot-feed">
-                                <div class="bot-message">Escolha uma pergunta rapida para receber uma leitura do seu mes.</div>
+                                <div class="bot-message bot-initial">Escolha uma pergunta ou digite sua duvida abaixo.</div>
+                            </div>
+                            
+                            <div class="bot-input-area">
+                                <input type="text" id="bot-input" class="bot-text-input" placeholder="Faça uma pergunta sobre suas finanças..." autocomplete="off">
+                                <button type="button" id="bot-send" class="bot-send-button" aria-label="Enviar pergunta" title="Enviar">Enviar</button>
                             </div>
                         </article>
 
-                        <aside class="bot-actions">
+                        <aside class="bot-suggestions">
+                            <p class="section-subtitle">Perguntas pre-definidas:</p>
                             <button type="button" class="secondary-button" data-bot-action="resumo">Resumir meu mes</button>
                             <button type="button" class="secondary-button" data-bot-action="otimizar">Como reduzir gastos?</button>
-                            <button type="button" class="secondary-button" data-bot-action="futuro">Como adicionar Pix e investimentos?</button>
+                            <button type="button" class="secondary-button" data-bot-action="futuro">Pix e investimentos</button>
                         </aside>
                     </div>
                 </section>
 
                 <section id="panel-perfil" class="dashboard-panel">
+                    <section class="hero-strip">
+                        <div>
+                            <p class="eyebrow">Configuracoes</p>
+                            <h1 class="page-title" id="page-title-perfil">Perfil e Tema</h1>
+                            <p class="section-subtitle" th:text="'Ola, ' + ${usuarioNome}">Ola, usuario</p>
+                            <p class="hero-copy">Gerencie seu perfil e preferencias de tema visual.</p>
+                        </div>
+                    </section>
                     <div class="bot-layout">
                         <form th:action="@{/perfil}"
                               th:object="${perfilForm}"
@@ -397,6 +417,14 @@
                 </section>
 
                 <section id="panel-futuro" class="dashboard-panel">
+                    <section class="hero-strip">
+                        <div>
+                            <p class="eyebrow">Recursos futuros</p>
+                            <h1 class="page-title" id="page-title-futuro">Pix, Cripto e Acoes</h1>
+                            <p class="section-subtitle" th:text="'Ola, ' + ${usuarioNome}">Ola, usuario</p>
+                            <p class="hero-copy">Novos recursos chegando em breve com seguranca e controle total.</p>
+                        </div>
+                    </section>
                     <div class="future-grid">
                         <article class="future-card">
                             <span class="badge">Em breve</span>
@@ -419,6 +447,14 @@
                 </section>
 
                 <section id="panel-seguranca" class="dashboard-panel">
+                    <section class="hero-strip">
+                        <div>
+                            <p class="eyebrow">Privacidade</p>
+                            <h1 class="page-title" id="page-title-seguranca">Seguranca e Privacidade</h1>
+                            <p class="section-subtitle" th:text="'Ola, ' + ${usuarioNome}">Ola, usuario</p>
+                            <p class="hero-copy">Saiba como seus dados sao protegidos nesta aplicacao.</p>
+                        </div>
+                    </section>
                     <ul class="secure-list">
                         <li>
                             <strong>Sem CDN na interface</strong>
